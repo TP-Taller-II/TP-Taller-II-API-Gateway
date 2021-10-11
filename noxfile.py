@@ -7,7 +7,8 @@ import nox
 def tests(session):
     """Run all tests."""
     session.install("poetry==1.1.9")
-    session.run("poetry", "install", "-E", "testing")
+    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
+    session.run("pip install -r poetry_requirements.txt")
 
     cmd = ["poetry", "run", "pytest", "-n", "auto"]
 
