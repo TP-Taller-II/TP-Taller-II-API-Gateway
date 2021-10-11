@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+    api_gateway_postgres:
+        container_name: api_gateway_postgres
+        image: postgres:11.9
+        environment:
+          - POSTGRES_USER=api_gateway
+          - POSTGRES_PASSWORD=api_gateway
+          - POSTGRES_DB=api_gateway
+          - PGDATA=/var/lib/postgresql/data/pgdata
+        ports:
+          - 54321:5432
+        volumes:
+          - /var/lib/postgresql/data/pgdata
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+    api_gateway_api:
+      container_name: api_gateway_api
+      depends_on:
+        - api_gateway_postgres
+      build:
+        context: ../
+        dockerfile: Dockerfile
+      ports:
+        - "5000:5000"
+      environment:
+        - DATABASE_URL=postgres://api_gateway:api_gateway@api_gateway_postgres/api_gateway
+      entrypoint: /app/docker-compose/api-entrypoint.sh
