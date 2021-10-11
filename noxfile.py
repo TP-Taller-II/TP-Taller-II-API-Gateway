@@ -13,7 +13,7 @@ def tests(session):
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s " + os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", external=True
+            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts" + "/s", external=True
         )
     session.run("poetry", "install", "-E", "testing")
 
@@ -33,7 +33,7 @@ def cop(session):
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s " + os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", external=True
+            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts" + "/s", external=True
         )
     session.run("poetry", "install")
 
@@ -51,7 +51,7 @@ def bandit(session):
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s " + os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", external=True
+            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts" + "/s", external=True
         )
     session.run("poetry", "install")
 
@@ -68,7 +68,7 @@ def pyreverse(session):
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s " + os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", external=True
+            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts" + "/s", external=True
         )
 
     # TODO: create smaller diagrams with portions of the project.
