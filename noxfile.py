@@ -10,10 +10,10 @@ def tests(session):
     """Run all tests."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+            "rmdir", "/s", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
         )
     session.run("poetry", "install", "-E", "testing")
 
@@ -30,10 +30,10 @@ def cop(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+            "rmdir", "/s", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
         )
     session.run("poetry", "install")
 
@@ -48,10 +48,10 @@ def bandit(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+            "rmdir", "/s", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
         )
     session.run("poetry", "install")
 
@@ -65,10 +65,10 @@ def pyreverse(session):
     """Create class diagrams."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
         session.run(
-            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+            "rmdir", "/s", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
         )
 
     # TODO: create smaller diagrams with portions of the project.
