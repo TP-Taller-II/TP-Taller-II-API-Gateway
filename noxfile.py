@@ -12,7 +12,7 @@ def tests(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
     session.run("poetry", "install", "-E", "testing")
 
     cmd = ["poetry", "run", "pytest", "-n", "auto"]
@@ -30,7 +30,7 @@ def cop(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
     session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
@@ -46,7 +46,7 @@ def bandit(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
     session.run("poetry", "install")
 
     session.run(
@@ -61,7 +61,7 @@ def pyreverse(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
 
     # TODO: create smaller diagrams with portions of the project.
     session.run("poetry", "run", "pyreverse", "api_gateway", "-o", "png")
