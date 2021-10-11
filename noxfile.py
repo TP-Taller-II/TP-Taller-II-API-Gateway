@@ -12,9 +12,7 @@ def tests(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        session.run(
-            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", "/s", external=True
-        )
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
     session.run("poetry", "install", "-E", "testing")
 
     cmd = ["poetry", "run", "pytest", "-n", "auto"]
@@ -32,9 +30,7 @@ def cop(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        session.run(
-            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", "/s", external=True
-        )
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
     session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
@@ -50,9 +46,7 @@ def bandit(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        session.run(
-            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", "/s", external=True
-        )
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
     session.run("poetry", "install")
 
     session.run(
@@ -67,9 +61,7 @@ def pyreverse(session):
     if os.name == "nt" and os.path.exists(
         os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
     ):
-        session.run(
-            "rmdir", os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts", "/s", external=True
-        )
+        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s")
 
     # TODO: create smaller diagrams with portions of the project.
     session.run("poetry", "run", "pyreverse", "api_gateway", "-o", "png")
