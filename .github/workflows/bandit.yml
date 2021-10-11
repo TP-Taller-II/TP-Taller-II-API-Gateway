@@ -13,6 +13,6 @@ jobs:
     - name: Install dependencies
       run: pip install nox
     - name: Poetry Fix
-      run: python get-poetry.py --version 1.1.8
+      run: pip install poetry==1.1.8
     - name: Run cop session
       run: nox --sessions bandit

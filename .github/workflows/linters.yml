@@ -12,5 +12,7 @@ jobs:
         python-version: 3.7
     - name: Install dependencies
       run: pip install nox
+    - name: Poetry Fix
+      run: pip install poetry==1.1.8
     - name: Run cop session
       run: nox --sessions cop

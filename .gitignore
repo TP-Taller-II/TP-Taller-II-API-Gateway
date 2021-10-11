@@ -138,6 +138,7 @@ Pipfile*
 
 # Pycharm
 idea/*
+.idea/*
 
 ### Python Patch ###
 .venv/
