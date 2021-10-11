@@ -6,7 +6,7 @@ import nox
 @nox.session(reuse_venv=True)
 def tests(session):
     """Run all tests."""
-    session.install("poetry==1.1.9")
+    session.install("poetry")
     session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
     session.run("pip install -r poetry_requirements.txt")
 
@@ -22,6 +22,8 @@ def tests(session):
 def cop(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
+    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
+    session.run("pip install -r poetry_requirements.txt")
     session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
@@ -34,6 +36,8 @@ def cop(session):
 def bandit(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
+    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
+    session.run("pip install -r poetry_requirements.txt")
     session.run("poetry", "install")
 
     session.run("poetry", "run", "bandit", "-r", "api_gateway/", "-ll", "-c", "bandit.yaml")
@@ -43,6 +47,8 @@ def bandit(session):
 def pyreverse(session):
     """Create class diagrams."""
     session.install("poetry")
+    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
+    session.run("pip install -r poetry_requirements.txt")
 
     # TODO: create smaller diagrams with portions of the project.
     session.run("poetry", "run", "pyreverse", "api_gateway", "-o", "png")
