@@ -1,6 +1,7 @@
 """Entrypoint for nox."""
 
 import nox
+import os
 
 
 @nox.session(reuse_venv=True)
@@ -22,9 +23,9 @@ def tests(session):
 def cop(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
-    session.run("poetry", "export", "-f", "requirements.txt", "--output", "requirements.txt", "--without-hashes")
-    session.run("pip", "install", "-r", "requirements.txt")
-    session.run("poetry", "install", "--no-root")
+    if os.name == "nt":
+        session.run("Remove-Item", "$env:USERPROFILE\\AppData\\Local\\pypoetry\\Cache\\artifacts", "-Recurse")
+    session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
     session.run(
