@@ -24,7 +24,6 @@ def cop(session):
     session.install("poetry")
     session.run("poetry", "export", "-f", "requirements.txt", "--output", "requirements.txt", "--without-hashes")
     session.run("pip", "install", "-r", "requirements.txt")
-    session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
     session.run(
