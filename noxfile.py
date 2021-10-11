@@ -22,8 +22,8 @@ def tests(session):
 def cop(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
-    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
-    session.run("pip install -r poetry_requirements.txt")
+    session.run("poetry", "export", "-f", "poetry_requirements.txt", "--output", "requirements.txt", "--without-hashes")
+    session.run("pip", "install", "-r", "poetry_requirements.txt")
     session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
