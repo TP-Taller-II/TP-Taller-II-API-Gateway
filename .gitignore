@@ -136,6 +136,9 @@ dmypy.json
 
 Pipfile*
 
+# Pycharm
+idea/*
+
 ### Python Patch ###
 .venv/
 
