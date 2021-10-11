@@ -24,7 +24,7 @@ def cop(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
     if os.name == "nt":
-        session.run("rmdir", "/s", "$env:USERPROFILE\\AppData\\Local\\pypoetry\\Cache\\artifacts")
+        session.run("rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts")
     session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
