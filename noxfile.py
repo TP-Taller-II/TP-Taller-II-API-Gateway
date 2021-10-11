@@ -9,10 +9,13 @@ import nox
 def tests(session):
     """Run all tests."""
     session.install("poetry")
-    session.run(
-        "poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes"
-    )
-    session.run("pip install -r poetry_requirements.txt")
+    if os.name == "nt" and os.path.exists(
+        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+    ):
+        session.run(
+            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        )
+    session.run("poetry", "install", "-E", "testing")
 
     cmd = ["poetry", "run", "pytest", "-n", "auto"]
 
@@ -44,10 +47,12 @@ def cop(session):
 def bandit(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
-    session.run(
-        "poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes"
-    )
-    session.run("pip install -r poetry_requirements.txt")
+    if os.name == "nt" and os.path.exists(
+        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+    ):
+        session.run(
+            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        )
     session.run("poetry", "install")
 
     session.run(
@@ -59,10 +64,12 @@ def bandit(session):
 def pyreverse(session):
     """Create class diagrams."""
     session.install("poetry")
-    session.run(
-        "poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes"
-    )
-    session.run("pip install -r poetry_requirements.txt")
+    if os.name == "nt" and os.path.exists(
+        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+    ):
+        session.run(
+            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        )
 
     # TODO: create smaller diagrams with portions of the project.
     session.run("poetry", "run", "pyreverse", "api_gateway", "-o", "png")
