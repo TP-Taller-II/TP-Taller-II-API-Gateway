@@ -1,14 +1,17 @@
 """Entrypoint for nox."""
 
-import nox
 import os
+
+import nox
 
 
 @nox.session(reuse_venv=True)
 def tests(session):
     """Run all tests."""
     session.install("poetry")
-    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
+    session.run(
+        "poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes"
+    )
     session.run("pip install -r poetry_requirements.txt")
 
     cmd = ["poetry", "run", "pytest", "-n", "auto"]
@@ -23,8 +26,12 @@ def tests(session):
 def cop(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
-    if os.name == "nt" and os.path.exists("%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"):
-        session.run("rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts")
+    if os.name == "nt" and os.path.exists(
+        "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+    ):
+        session.run(
+            "rmdir", "/s", "%HOMEPATH%\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        )
     session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
@@ -37,18 +44,24 @@ def cop(session):
 def bandit(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
-    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
+    session.run(
+        "poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes"
+    )
     session.run("pip install -r poetry_requirements.txt")
     session.run("poetry", "install")
 
-    session.run("poetry", "run", "bandit", "-r", "api_gateway/", "-ll", "-c", "bandit.yaml")
+    session.run(
+        "poetry", "run", "bandit", "-r", "api_gateway/", "-ll", "-c", "bandit.yaml"
+    )
 
 
 @nox.session(reuse_venv=True)
 def pyreverse(session):
     """Create class diagrams."""
     session.install("poetry")
-    session.run("poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes")
+    session.run(
+        "poetry export -f poetry_requirements.txt --output requirements.txt --without-hashes"
+    )
     session.run("pip install -r poetry_requirements.txt")
 
     # TODO: create smaller diagrams with portions of the project.
