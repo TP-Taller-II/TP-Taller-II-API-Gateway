@@ -6,7 +6,7 @@ import nox
 @nox.session(reuse_venv=True)
 def tests(session):
     """Run all tests."""
-    session.install("poetry==1.1.8")
+    session.install("poetry==1.1.9")
     session.run("poetry", "install", "-E", "testing")
 
     cmd = ["poetry", "run", "pytest", "-n", "auto"]
