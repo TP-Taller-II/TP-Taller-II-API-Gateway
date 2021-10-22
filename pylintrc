@@ -22,4 +22,4 @@ max-line-length = 88  # as in black
 
 [MISCELLANEOUS]
 
-ignored-classes=SQLObject,Registrant,scoped_session
+ignored-classes=Registrant,scoped_session

@@ -127,7 +127,6 @@ Prior to the actual deploy, **make sure to commit your changes**.
 
 ```bash
 heroku create api-gateway
-heroku addons:create heroku-postgresql:hobby-dev
 heroku stack:set container
 git push heroku master
 ```

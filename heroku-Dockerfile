@@ -1,5 +1,5 @@
 FROM python:3.7.7-stretch
-RUN apt-get update && apt-get install -y postgresql-client
+RUN apt-get update
 
 # Install Heroku GPG dependencies
 RUN apt-get install -y gpg apt-transport-https gpg-agent curl ca-certificates

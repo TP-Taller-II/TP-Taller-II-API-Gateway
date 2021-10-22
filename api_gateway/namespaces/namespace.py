@@ -2,7 +2,7 @@
 
 from flask_restx import Namespace, Resource
 
-from .models import echo_model, echo_parser, hello_model
+from api_gateway.namespaces.models import echo_model, echo_parser, hello_model
 
 ns = Namespace("Default", description="Default operations")
 
