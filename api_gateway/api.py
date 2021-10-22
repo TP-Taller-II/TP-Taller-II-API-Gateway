@@ -1,11 +1,12 @@
 """API module."""
 import logging
+
 import flask.scaffold
 
 flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
-from api_gateway.namespaces.namespace import ns
-
 from flask_restx import Api
+
+from api_gateway.namespaces.namespace import ns
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

@@ -8,7 +8,6 @@ import tempfile
 import pytest
 
 from api_gateway.app import create_app
-from api_gateway.models import db
 
 logger = logging.getLogger(__name__)
 
