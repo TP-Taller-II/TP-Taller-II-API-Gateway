@@ -1,13 +1,10 @@
 """Flask api."""
 import logging
-from pathlib import Path
 
 from flask import Flask
 from flask_cors import CORS
-from werkzeug.middleware.proxy_fix import ProxyFix
 
 from api_gateway.api import api
-from api_gateway.cfg import config
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

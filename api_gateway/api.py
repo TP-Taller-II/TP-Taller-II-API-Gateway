@@ -3,7 +3,7 @@ import logging
 
 import flask.scaffold
 
-flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
+flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func  # pylint: disable=W0212
 from flask_restx import Api
 
 from api_gateway.namespaces.namespace import ns
