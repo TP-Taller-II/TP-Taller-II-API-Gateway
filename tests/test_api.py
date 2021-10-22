@@ -1,8 +1,6 @@
 """Sample test suite."""
 
-import json
 import logging
-import tempfile
 
 # pylint:disable=redefined-outer-name,protected-access
 import pytest
