@@ -77,13 +77,6 @@ To run pyreverse session,
 poetry run nox --sessions pyreverse
 ```
 
-## Adding new migrations
-```bash
-poetry run python api_gateway/manage.py db migrate -m "migration message"
-```
-
-Remember to review them after creating them.
-
 ## Style guide
 api_gateway follows [PEP8](https://www.python.org/dev/peps/pep-0008/).
 
@@ -121,6 +114,8 @@ FLASK_APP=$(pwd)/api_gateway/app.py poetry run flask run
 ```
 
 # Deploy to heroku
+*Currently deployed in: https://ubademy-g2-api-gateway.herokuapp.com*
+
 You will need to have the [heroku cli](https://devcenter.heroku.com/articles/heroku-cli) installed and correctly configured for the following steps.
 
 Prior to the actual deploy, **make sure to commit your changes**.

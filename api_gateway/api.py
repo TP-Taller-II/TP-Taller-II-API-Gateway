@@ -2,19 +2,20 @@
 import logging
 
 import flask.scaffold
-
+# monkeypatching this because it flask_restx has a bug
 # pylint:disable=W0212
 flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
-from flask_restx import Api
+from api_gateway import __version__
+from api_gateway.namespaces import default_namespace
 
-from api_gateway.namespaces.namespace import ns
+from flask_restx import Api
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-api = Api(prefix="/v1", version="0.1", validate=True)
-api.add_namespace(ns, path='/hello')
+api = Api(prefix="/v1", version="__version__", validate=True)
+api.add_namespace(default_namespace, path='/hello')
 
 
 @api.errorhandler
