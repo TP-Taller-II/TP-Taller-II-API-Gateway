@@ -109,7 +109,6 @@ docker-compose up --build
 First make sure you have the db up to date, and then run locally.
 
 ```bash
-poetry run python api_gateway/manage.py db upgrade
 FLASK_APP=$(pwd)/api_gateway/app.py poetry run flask run
 ```
 
