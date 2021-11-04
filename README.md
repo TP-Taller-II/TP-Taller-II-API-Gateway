@@ -1,5 +1,5 @@
 # api_gateway
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway?style=flat-square) ![Coverage](coverage-badge.svg)[![Tests](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/tests.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/tests.yml)[![Linters](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/linters.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/linters.yml)[![Bandit](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway?style=flat-square) [![codecov](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway/branch/master/graph/badge.svg?token=WKUANC9AZJ)](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway)[![Tests](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/tests.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/tests.yml)[![Linters](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/linters.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/linters.yml)[![Bandit](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml)
 
 API Gateway para el trabajo practico de Taller de Programacion II
 
@@ -129,8 +129,6 @@ git push heroku master
 3. The second step sets the app to use [a docker image](https://devcenter.heroku.com/articles/build-docker-images-heroku-yml). Instead of using a [Procfile](https://devcenter.heroku.com/articles/procfile), we will use a `heroku.yml`. Heroku does not yet support a [poetry buildpack](https://github.com/python-poetry/poetry/issues/403) and exporting a `requirements.txt` from poetry is pretty cumbersome.
 4. Deploy 🚀
 
-## [Optional] Badge
-Add this badge to your readme: `![](https://heroku-badge.herokuapp.com/?app=api-gateway)`
 
 ## Diagnosing errors
 You can fetch logs from the app using `heroku logs --tail`.
