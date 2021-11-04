@@ -4,7 +4,7 @@ from flask_restx import Namespace, Resource
 
 from api_gateway.namespaces.default.models import echo_model, echo_parser, hello_model
 
-ns = Namespace("Default", description="Default operations")
+ns = Namespace("Courses", description="Default operations")
 
 ns.models[echo_model.name] = echo_model
 ns.models[hello_model.name] = hello_model

@@ -3,8 +3,3 @@ build:
   docker:
     web: heroku-Dockerfile
 
-release:
-  image: web
-  command:
-    - poetry run python api_gateway/manage.py db upgrade
-

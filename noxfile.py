@@ -4,15 +4,21 @@ import os
 
 import nox
 
+nox.options.reuse_existing_virtualenvs = True
+
 
 @nox.session(reuse_venv=True)
 def tests(session):
     """Run all tests."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
+        os.system(
+            "rmdir "
+            + os.path.expanduser("~")
+            + "\\AppData\\Local\\pypoetry\\Cache /s /q"
+        )
     session.run("poetry", "install", "-E", "testing")
 
     cmd = ["poetry", "run", "pytest", "-n", "auto"]
@@ -28,9 +34,13 @@ def cop(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
+        os.system(
+            "rmdir "
+            + os.path.expanduser("~")
+            + "\\AppData\\Local\\pypoetry\\Cache /s /q"
+        )
     session.run("poetry", "install")
 
     session.run("poetry", "run", "pre-commit", "install")
@@ -44,9 +54,13 @@ def bandit(session):
     """Run all pre-commit hooks."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
+        os.system(
+            "rmdir "
+            + os.path.expanduser("~")
+            + "\\AppData\\Local\\pypoetry\\Cache /s /q"
+        )
     session.run("poetry", "install")
 
     session.run(
@@ -59,9 +73,13 @@ def pyreverse(session):
     """Create class diagrams."""
     session.install("poetry")
     if os.name == "nt" and os.path.exists(
-        os.path.expanduser("~")+"\\AppData\\Local\\pypoetry\\Cache\\artifacts"
+        os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache"
     ):
-        os.system("rmdir " + os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache\\artifacts /s /q")
+        os.system(
+            "rmdir "
+            + os.path.expanduser("~")
+            + "\\AppData\\Local\\pypoetry\\Cache /s /q"
+        )
 
     # TODO: create smaller diagrams with portions of the project.
     session.run("poetry", "run", "pyreverse", "api_gateway", "-o", "png")
