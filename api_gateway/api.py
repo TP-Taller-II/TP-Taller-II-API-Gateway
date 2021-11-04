@@ -20,7 +20,7 @@ api.add_namespace(default_namespace, path='/hello')
 api.add_namespace(courses_namespace, path='/courses')
 
 
-## Acordarse de mandar el x-header-user
+# Acordarse de mandar el x-header-user
 
 @api.errorhandler
 def handle_exception(error: Exception):
