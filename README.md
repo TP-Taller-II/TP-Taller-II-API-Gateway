@@ -1,5 +1,8 @@
 # API Gateway
-[![codecov](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway/branch/master/graph/badge.svg?token=WKUANC9AZJ)](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway)
+[![Codecov Code Coverage](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway/branch/master/graph/badge.svg?token=WKUANC9AZJ)](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway)
+[![Tests](https://github.com/TP-Taller-II/TP-Taller-II-API-Gateway/actions/workflows/tests.yml/badge.svg)](https://github.com/TP-Taller-II/TP-Taller-II-API-Gateway/actions/workflows/tests.yml)
+[![Linter](https://github.com/TP-Taller-II/TP-Taller-II-API-Gateway/actions/workflows/linters.yml/badge.svg)](https://github.com/TP-Taller-II/TP-Taller-II-API-Gateway/actions/workflows/linters.yml)
+[![Bandit Security Action](https://github.com/TP-Taller-II/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml/badge.svg)](https://github.com/TP-Taller-II/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml)
 
 API Gateway para el trabajo practico de Taller de Programacion II
 
@@ -169,9 +172,3 @@ Run tests to avoid regressions before merging.
 
 ## Swagger
 You can visit the swagger docs at `127.0.0.1:5000`.
-
-## Whole project class diagram
-![project_classes](docs/images/project_classes.png)
-
-## Packages
-![packages](docs/images/packages_dependencies.png)
