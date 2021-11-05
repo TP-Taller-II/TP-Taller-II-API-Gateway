@@ -1,5 +1,5 @@
-# api_gateway
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway?style=flat-square) [![codecov](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway/branch/master/graph/badge.svg?token=WKUANC9AZJ)](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway)[![Tests](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/tests.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/tests.yml)[![Linters](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/linters.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/linters.yml)[![Bandit](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml/badge.svg)](https://github.com/fgauna@fi.uba.ar/TP-Taller-II-API-Gateway/actions/workflows/bandit.yml)
+# API Gateway
+[![codecov](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway/branch/master/graph/badge.svg?token=WKUANC9AZJ)](https://codecov.io/gh/TP-Taller-II/TP-Taller-II-API-Gateway)
 
 API Gateway para el trabajo practico de Taller de Programacion II
 
