@@ -21,7 +21,7 @@ def tests(session):
         )
     session.run("poetry", "install", "-E", "testing")
 
-    cmd = ["poetry", "run", "pytest", "-n", "auto"]
+    cmd = ["poetry", "run", "pytest", "-n", "auto", "--cov-report", "term"]
 
     if session.posargs:
         cmd.extend(session.posargs)
