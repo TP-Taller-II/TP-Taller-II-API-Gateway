@@ -17,6 +17,8 @@ flask = "^2.0.2"
 flask-restx = "^0.2.0"
 flask_script = "^2.0.6"
 Flask-Cors = "^3.0.9"
+python-json-logger = "^2.0.2"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 nox = "^2020.8.22"
@@ -31,6 +33,7 @@ isort = "^5.6.4"
 pylint-flask = "^0.6"
 coverage-badge = "^1.0.1"
 coverage = "^5.5"
+pytest-mock = "^3.6.1"
 
 [tool.poetry.extras]
 testing = ["pytest", "pytest-cov", "pytest-xdist"]

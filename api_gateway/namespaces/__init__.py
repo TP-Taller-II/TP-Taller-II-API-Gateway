@@ -1,1 +1,1 @@
-from .default import ns as default_namespace
+from .course import ns as course_namespace
