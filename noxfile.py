@@ -72,19 +72,10 @@ def bandit(session):
 def pyreverse(session):
     """Create class diagrams."""
     session.install("poetry")
-    if os.name == "nt" and os.path.exists(
-        os.path.expanduser("~") + "\\AppData\\Local\\pypoetry\\Cache"
-    ):
-        os.system(
-            "rmdir "
-            + os.path.expanduser("~")
-            + "\\AppData\\Local\\pypoetry\\Cache /s /q"
-        )
-
-    # TODO: create smaller diagrams with portions of the project.
-    session.run("poetry", "run", "pyreverse", "api_gateway", "-o", "png")
-
-    session.run(
-        "mv", "packages.png", "docs/images/packages_dependencies.png", external=True
-    )
-    session.run("mv", "classes.png", "docs/images/project_classes.png", external=True)
+    # # TODO: create smaller diagrams with portions of the project.
+    # session.run("poetry", "run", "pyreverse", "api_gateway", "-o", "png")
+    #
+    # session.run(
+    #     "mv", "packages.png", "docs/images/packages_dependencies.png", external=True
+    # )
+    # session.run("mv", "classes.png", "docs/images/project_classes.png", external=True)
