@@ -10,13 +10,14 @@ flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
 from flask_restx import Api
 
 from api_gateway import __version__
-from api_gateway.namespaces import course_namespace
+from api_gateway.namespaces import course_namespace, user_namespace
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 api = Api(prefix="/api", version=__version__, validate=True)
 api.add_namespace(course_namespace, path='/courses')
+api.add_namespace(user_namespace, path='/auth-server')
 
 # Acordarse de mandar el x-header-user !!!!
 

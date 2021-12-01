@@ -6,11 +6,11 @@ import requests
 from api_gateway.helpers.logger import logger
 
 
-class CourseClient:
+class AuthServerClient:
     def __init__(self):
         # !!!!
         self.url = os.environ.get(
-            'FRUX_SC_URL', 'https://ubademy-g2-courses.herokuapp.com'
+            'FRUX_SC_URL', 'https://ubademy-g2-auth-server.herokuapp.com'
         )
         self.api_key = os.environ.get('FRUX_SC_API_KEY', '')
 
@@ -26,7 +26,7 @@ class CourseClient:
             )
         except Exception as e:
             logger.error(
-                'Error when making request path: "%s", token: "%s" to Courses. Error: %s',
+                'Error when making request path: "%s", token: "%s" to Auth Server. Error: %s',
                 path,
                 token,
                 e,
@@ -35,7 +35,7 @@ class CourseClient:
 
         res_body = json.loads(r.content.decode())
         logger.info(
-            'CourseClient method: %s, path: %s, status_code: %s, body: %s',
+            'AuthServerClient method: %s, path: %s, status_code: %s, body: %s',
             method,
             path,
             r.status_code,
@@ -48,4 +48,4 @@ class CourseClient:
         return self._request(method, path, token, body)
 
 
-course_client = CourseClient()
+auth_server_client = AuthServerClient()
