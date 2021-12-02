@@ -10,7 +10,7 @@ class CourseClient:
     def __init__(self):
         # !!!!
         self.url = os.environ.get(
-            'FRUX_SC_URL', 'https://ubademy-g2-courses!!!!.herokuapp.com'
+            'FRUX_SC_URL', 'https://ubademy-g2-courses.herokuapp.com'
         )
 
     def _request(self, method, path, body, token, user_id):

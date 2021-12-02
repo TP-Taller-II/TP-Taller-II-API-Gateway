@@ -10,7 +10,7 @@ class AuthServerClient:
     def __init__(self):
         # !!!!
         self.url = os.environ.get(
-            'FRUX_SC_URL', 'https://ubademy-g2-auth-server!!!!.herokuapp.com'
+            'FRUX_SC_URL', 'https://ubademy-g2-auth-server.herokuapp.com'
         )
 
     def _request(
