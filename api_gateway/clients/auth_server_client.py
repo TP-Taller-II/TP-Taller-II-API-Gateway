@@ -14,14 +14,12 @@ class AuthServerClient:
         )
 
     def _request(
-        self, method, path, token, body,
+        self, method, path, body, token,
     ):
         if not body:
             body = {}
         func = getattr(requests, method)
         try:
-            print('!!!! AuthServerClient _request')
-
             r = func(f'{self.url}{path}', json=body, headers={'x-auth-token': token})
         except Exception as e:
             logger.error(
@@ -43,8 +41,8 @@ class AuthServerClient:
 
         return res_body, r.status_code
 
-    def call(self, method, path, token, body):
-        return self._request(method, path, token, body)
+    def call(self, method, path, body, token):
+        return self._request(method, path, body, token)
 
 
 auth_server_client = AuthServerClient()

@@ -34,6 +34,8 @@ user_response_dto = {
     "__v": 0,
 }
 
+valid_auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvZV9kb2VhYXNsQGdtYWlsLmNvbSIsIl9pZCI6IjYxYTZmMWY3ZjdiYzAyMDAxMGJhZTJiMyIsImNyZWF0aW9uRGF0ZSI6IjIwMjEtMTItMDFUMjM6MjE6MDEuNzczWiIsImV4cGlyYXRpb25EYXRlIjoiMjAyMS0xMi0yMVQyMzoyMTowMS43NzNaIiwiaWF0IjoxNjM4NDAwODYxfQ.8f-5uo56UZzM4l0b3LDB3qoCW5vwFamRUvrzEoQ-AJI'
+
 
 class ResponseContentMock:
     def __init__(self, res_body):
@@ -53,7 +55,7 @@ class ResponseMock:
 def client():
     app = create_app()
     with app.test_client() as test_client:
-        test_client.environ_base['HTTP_AUTHORIZATION'] = 'token-1'
+        test_client.environ_base['HTTP_AUTHORIZATION'] = valid_auth_token
         yield test_client
 
 
@@ -75,12 +77,15 @@ def test_get_courses(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == ['course1', 'course2']
@@ -96,7 +101,7 @@ def test_get_courses_but_authentication_returns_401(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     assert response._status_code == 401
     assert json.loads(response.data) == {'message': 'Token expired'}
@@ -112,7 +117,7 @@ def test_get_courses_but_authentication_returns_500(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     assert response._status_code == 500
     assert json.loads(response.data) == {'message': 'Internal server error'}
@@ -131,12 +136,15 @@ def test_post_courses(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 201
     assert json.loads(response.data) == {'resource': {'id': '1'}}
@@ -155,12 +163,15 @@ def test_get_course(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -179,12 +190,15 @@ def test_patch_course(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     patch_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -203,12 +217,15 @@ def test_delete_course(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -227,12 +244,15 @@ def test_get_exams(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == [{'id': '1'}]
@@ -251,12 +271,15 @@ def test_post_exams(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 201
     assert json.loads(response.data) == {'resource': {'id': '1'}}
@@ -275,12 +298,15 @@ def test_get_exam(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -301,12 +327,15 @@ def test_patch_exam(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     patch_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -325,12 +354,15 @@ def test_delete_exam(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -349,12 +381,15 @@ def test_get_students(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/students',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == [{'id': '1'}]
@@ -373,12 +408,15 @@ def test_post_students(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/students',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert get_mock_call.call_count == 1
     assert post_mock_call.call_count == 1
@@ -399,12 +437,15 @@ def test_delete_student(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/students/1',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -423,12 +464,15 @@ def test_get_professors(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/professors',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == [{'id': '1'}]
@@ -449,12 +493,15 @@ def test_post_professors(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/professors',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 201
     assert json.loads(response.data) == {'resource': {'id': '1'}}
@@ -473,12 +520,15 @@ def test_delete_professor(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/professors/1',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == {'id': '1'}
@@ -497,12 +547,15 @@ def test_get_exam_resolutions(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1/resolutions',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 200
     assert json.loads(response.data) == [{'id': '1'}]
@@ -523,12 +576,15 @@ def test_post_exam_resolutions(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1/resolutions',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert response._status_code == 201
     assert json.loads(response.data) == {'resource': {'id': '1'}}
@@ -548,12 +604,15 @@ def test_post_exam_resolutions_evaluate(client, mocker):
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
-        headers={'x-auth-token': 'token-1'},
+        headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
         'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1/resolutions/1/evaluate',
         json={'name': 'Fiesta'},
-        headers={'x-auth-token': 'token-1'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
     )
     assert get_mock_call.call_count == 1
     assert post_mock_call.call_count == 1
@@ -561,171 +620,172 @@ def test_post_exam_resolutions_evaluate(client, mocker):
     assert json.loads(response.data) == {'resource': {'id': '1'}}
 
 
-# def test_post_sign_up(client, mocker):
-#     request_dto = user_create_request_dto
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.post', return_value=ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.post("/api/auth-server/v1/users/signUp", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_post_sign_in(client, mocker):
-#     request_dto = {
-#         "email": "joe_doeaasl@gmail.com",
-#         "password": "joes super secret password",
-#     }
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.post', return_value=ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.post("/api/auth-server/v1/users/signIn", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_get_logged_user(client, mocker):
-#     forwarded_response = user_response
-#     get_mock_call = mocker.patch(
-#         'requests.get', side_effect=[authentication_response, courses_response]ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.get("/api/auth-server/v1/users/me")
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_patch_logged_user(client, mocker):
-#     request_dto = {"name": "Foo"}
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.patch', return_value=ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.patch("/api/auth-server/v1/users/me", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_get_some_user(client, mocker):
-#     forwarded_response = user_response
-#     get_mock_call = mocker.patch(
-#         'requests.get', side_effect=[authentication_response, courses_response]ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.get("/api/auth-server/v1/users/someuserid")
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_post_sign_out(client, mocker):
-#     request_dto = {"message": "User sign out"}
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.post', return_value=ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.post("/api/auth-server/v1/users/signOut", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_post_sign_out_unauthorized(client, mocker):
-#     request_dto = {"message": "User sign out"}
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.post', return_value=ResponseMock(401, forwarded_response)
-#     )
-#
-#     response = client.post("/api/auth-server/v1/users/signOut", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 401
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_post_admin_sign_up(client, mocker):
-#     request_dto = {
-#         "email": "joe_doeaasl@gmail.com",
-#         "password": "joes super secret password",
-#     }
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.post', return_value=ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.post("/api/auth-server/v1/admin/signIn", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_post_admin_sign_in(client, mocker):
-#     forwarded_response = [user_response]
-#     get_mock_call = mocker.patch(
-#         'requests.get', side_effect=[authentication_response, courses_response]ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.get("/api/auth-server/v1/admin/users")
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_get_admin_get_some_user(client, mocker):
-#     forwarded_response = user_response
-#     get_mock_call = mocker.patch(
-#         'requests.get', side_effect=[authentication_response, courses_response]ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.get("/api/auth-server/v1/admin/users/someuserid")
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_post_admin_sign_out(client, mocker):
-#     request_dto = {"message": "User sign out"}
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.post', return_value=ResponseMock(200, forwarded_response)
-#     )
-#
-#     response = client.post("/api/auth-server/v1/users/signOut", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 200
-#     assert json.loads(response.data) == forwarded_response
-#
-#
-# def test_post_admin_sign_out_unauthorized(client, mocker):
-#     request_dto = {"message": "User sign out"}
-#     forwarded_response = user_response
-#     mock_call = mocker.patch(
-#         'requests.post', return_value=ResponseMock(401, forwarded_response)
-#     )
-#
-#     response = client.post("/api/auth-server/v1/admin/signOut", json=request_dto)
-#
-#     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
-#     assert response._status_code == 401
-#     assert json.loads(response.data) == forwarded_response
+# !!!!!
+def test_post_sign_up(client, mocker):
+    request_dto = user_create_request_dto
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.post', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.post("/api/auth-server/v1/users/signUp", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_post_sign_in(client, mocker):
+    request_dto = {
+        "email": "joe_doeaasl@gmail.com",
+        "password": "joes super secret password",
+    }
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.post', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.post("/api/auth-server/v1/users/signIn", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_get_logged_user(client, mocker):
+    forwarded_response = user_response_dto
+    get_mock_call = mocker.patch(
+        'requests.get', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.get("/api/auth-server/v1/users/me")
+
+    get_mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_patch_logged_user(client, mocker):
+    request_dto = {"name": "Foo"}
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.patch', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.patch("/api/auth-server/v1/users/me", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_get_some_user(client, mocker):
+    forwarded_response = user_response_dto
+    get_mock_call = mocker.patch(
+        'requests.get', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.get("/api/auth-server/v1/users/someuserid")
+
+    get_mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_post_sign_out(client, mocker):
+    request_dto = {"message": "User sign out"}
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.post', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.post("/api/auth-server/v1/users/signOut", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_post_sign_out_unauthorized(client, mocker):
+    request_dto = {"message": "User sign out"}
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.post', return_value=ResponseMock(401, forwarded_response)
+    )
+
+    response = client.post("/api/auth-server/v1/users/signOut", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 401
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_post_admin_sign_up(client, mocker):
+    request_dto = {
+        "email": "joe_doeaasl@gmail.com",
+        "password": "joes super secret password",
+    }
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.post', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.post("/api/auth-server/v1/admin/signIn", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_post_admin_sign_in(client, mocker):
+    forwarded_response = [user_response_dto]
+    get_mock_call = mocker.patch(
+        'requests.get', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.get("/api/auth-server/v1/admin/users")
+
+    get_mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_get_admin_get_some_user(client, mocker):
+    forwarded_response = user_response_dto
+    get_mock_call = mocker.patch(
+        'requests.get', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.get("/api/auth-server/v1/admin/users/someuserid")
+
+    get_mock_call.assert_called_once_with(mocker.ANY, json={}, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_post_admin_sign_out(client, mocker):
+    request_dto = {"message": "User sign out"}
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.post', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.post("/api/auth-server/v1/users/signOut", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_post_admin_sign_out_unauthorized(client, mocker):
+    request_dto = {"message": "User sign out"}
+    forwarded_response = user_response_dto
+    mock_call = mocker.patch(
+        'requests.post', return_value=ResponseMock(401, forwarded_response)
+    )
+
+    response = client.post("/api/auth-server/v1/admin/signOut", json=request_dto)
+
+    mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
+    assert response._status_code == 401
+    assert json.loads(response.data) == forwarded_response
