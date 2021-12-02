@@ -22,7 +22,6 @@ def call_courses(payload):
     authentication_res_body, authentication_status_code = auth_server_client.call(
         'get', '/auth-server/v1/users/me', token, None
     )
-    # print('!!!! authentication_status_code', authentication_status_code)
     if authentication_status_code != 200:
         return authentication_res_body, authentication_status_code
 

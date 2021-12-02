@@ -71,6 +71,7 @@ def test_get_courses(client, mocker):
 
     response = client.get("/api/courses/v1/courses")
 
+    assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -85,6 +86,38 @@ def test_get_courses(client, mocker):
     assert json.loads(response.data) == ['course1', 'course2']
 
 
+def test_get_courses_but_authentication_returns_401(client, mocker):
+    authentication_response = ResponseMock(401, {'message': 'Token expired'})
+    get_mock_call = mocker.patch('requests.get', side_effect=[authentication_response])
+
+    response = client.get("/api/courses/v1/courses")
+
+    assert get_mock_call.call_count == 1
+    get_mock_call.assert_any_call(
+        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        json={},
+        headers={'x-auth-token': 'token-1'},
+    )
+    assert response._status_code == 401
+    assert json.loads(response.data) == {'message': 'Token expired'}
+
+
+def test_get_courses_but_authentication_returns_500(client, mocker):
+    authentication_response = ResponseMock(500, {'message': 'Internal server error'})
+    get_mock_call = mocker.patch('requests.get', side_effect=[authentication_response])
+
+    response = client.get("/api/courses/v1/courses")
+
+    assert get_mock_call.call_count == 1
+    get_mock_call.assert_any_call(
+        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        json={},
+        headers={'x-auth-token': 'token-1'},
+    )
+    assert response._status_code == 500
+    assert json.loads(response.data) == {'message': 'Internal server error'}
+
+
 def test_post_courses(client, mocker):
     authentication_response = ResponseMock(200, user_response_dto)
     courses_response = ResponseMock(201, {'resource': {'id': '1'}})
@@ -93,6 +126,8 @@ def test_post_courses(client, mocker):
 
     response = client.post("/api/courses/v1/courses", json={'name': 'Fiesta'})
 
+    assert get_mock_call.call_count == 1
+    assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -116,6 +151,7 @@ def test_get_course(client, mocker):
 
     response = client.get("/api/courses/v1/courses/1")
 
+    assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -138,6 +174,8 @@ def test_patch_course(client, mocker):
 
     response = client.patch("/api/courses/v1/courses/1", json={'name': 'Fiesta'})
 
+    assert get_mock_call.call_count == 1
+    assert patch_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -160,6 +198,8 @@ def test_delete_course(client, mocker):
 
     response = client.delete("/api/courses/v1/courses/1")
 
+    assert get_mock_call.call_count == 1
+    assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -183,6 +223,7 @@ def test_get_exams(client, mocker):
 
     response = client.get("/api/courses/v1/courses/1/exams")
 
+    assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -205,6 +246,8 @@ def test_post_exams(client, mocker):
 
     response = client.post("/api/courses/v1/courses/1/exams", json={'name': 'Fiesta'})
 
+    assert get_mock_call.call_count == 1
+    assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -228,6 +271,7 @@ def test_get_exam(client, mocker):
 
     response = client.get("/api/courses/v1/courses/1/exams/1")
 
+    assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -252,6 +296,8 @@ def test_patch_exam(client, mocker):
         "/api/courses/v1/courses/1/exams/1", json={'name': 'Fiesta'}
     )
 
+    assert get_mock_call.call_count == 1
+    assert patch_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -274,6 +320,8 @@ def test_delete_exam(client, mocker):
 
     response = client.delete("/api/courses/v1/courses/1/exams/1")
 
+    assert get_mock_call.call_count == 1
+    assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -297,6 +345,7 @@ def test_get_students(client, mocker):
 
     response = client.get("/api/courses/v1/courses/1/students")
 
+    assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -331,6 +380,8 @@ def test_post_students(client, mocker):
         json={'name': 'Fiesta'},
         headers={'x-auth-token': 'token-1'},
     )
+    assert get_mock_call.call_count == 1
+    assert post_mock_call.call_count == 1
     assert response._status_code == 201
     assert json.loads(response.data) == {'resource': {'id': '1'}}
 
@@ -343,6 +394,8 @@ def test_delete_student(client, mocker):
 
     response = client.delete("/api/courses/v1/courses/1/students/1")
 
+    assert get_mock_call.call_count == 1
+    assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -366,6 +419,7 @@ def test_get_professors(client, mocker):
 
     response = client.get("/api/courses/v1/courses/1/professors")
 
+    assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -390,6 +444,8 @@ def test_post_professors(client, mocker):
         "/api/courses/v1/courses/1/professors", json={'name': 'Fiesta'}
     )
 
+    assert get_mock_call.call_count == 1
+    assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -412,6 +468,8 @@ def test_delete_professor(client, mocker):
 
     response = client.delete("/api/courses/v1/courses/1/professors/1")
 
+    assert get_mock_call.call_count == 1
+    assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -435,6 +493,7 @@ def test_get_exam_resolutions(client, mocker):
 
     response = client.get("/api/courses/v1/courses/1/exams/1/resolutions")
 
+    assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -459,6 +518,8 @@ def test_post_exam_resolutions(client, mocker):
         "/api/courses/v1/courses/1/exams/1/resolutions", json={'name': 'Fiesta'}
     )
 
+    assert get_mock_call.call_count == 1
+    assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
         'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
         json={},
@@ -494,6 +555,8 @@ def test_post_exam_resolutions_evaluate(client, mocker):
         json={'name': 'Fiesta'},
         headers={'x-auth-token': 'token-1'},
     )
+    assert get_mock_call.call_count == 1
+    assert post_mock_call.call_count == 1
     assert response._status_code == 201
     assert json.loads(response.data) == {'resource': {'id': '1'}}
 
