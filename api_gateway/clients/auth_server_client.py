@@ -8,7 +8,6 @@ from api_gateway.helpers.logger import logger
 
 class AuthServerClient:
     def __init__(self):
-        # !!!!
         self.url = os.environ.get(
             'FRUX_SC_URL', 'https://ubademy-g2-auth-server.herokuapp.com'
         )
