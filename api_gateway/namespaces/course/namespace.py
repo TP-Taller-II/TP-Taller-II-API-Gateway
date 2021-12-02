@@ -20,14 +20,16 @@ def call_courses(payload):
     token = request.headers['Authorization']
 
     authentication_res_body, authentication_status_code = auth_server_client.call(
-        'get', '/auth-server/v1/users/me', token, None
+        'get', '/auth-server/v1/users/me', None, token
     )
     if authentication_status_code != 200:
         return authentication_res_body, authentication_status_code
 
     path = request.path.split('/api')[1]
     method = request.method.lower()
-    res_body, res_status_code = course_client.call(method, path, token, payload)
+    res_body, res_status_code = course_client.call(
+        method, path, payload, token, authentication_res_body['_id']
+    )
     return res_body, res_status_code
 
 
