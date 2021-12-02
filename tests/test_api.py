@@ -620,7 +620,6 @@ def test_post_exam_resolutions_evaluate(client, mocker):
     assert json.loads(response.data) == {'resource': {'id': '1'}}
 
 
-# !!!!!
 def test_post_sign_up(client, mocker):
     request_dto = user_create_request_dto
     forwarded_response = user_response_dto

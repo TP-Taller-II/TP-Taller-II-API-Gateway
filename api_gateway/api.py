@@ -19,8 +19,6 @@ api = Api(prefix="/api", version=__version__, validate=True)
 api.add_namespace(course_namespace, path='/courses')
 api.add_namespace(user_namespace, path='/auth-server')
 
-# Acordarse de mandar el x-header-user !!!!
-
 
 @api.errorhandler
 def handle_exception(error: Exception):
