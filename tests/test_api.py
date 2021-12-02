@@ -75,12 +75,12 @@ def test_get_courses(client, mocker):
 
     assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -99,7 +99,7 @@ def test_get_courses_but_authentication_returns_401(client, mocker):
 
     assert get_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
@@ -115,7 +115,7 @@ def test_get_courses_but_authentication_returns_500(client, mocker):
 
     assert get_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
@@ -134,12 +134,12 @@ def test_post_courses(client, mocker):
     assert get_mock_call.call_count == 1
     assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
@@ -161,12 +161,12 @@ def test_get_course(client, mocker):
 
     assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -188,12 +188,12 @@ def test_patch_course(client, mocker):
     assert get_mock_call.call_count == 1
     assert patch_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     patch_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
@@ -215,12 +215,12 @@ def test_delete_course(client, mocker):
     assert get_mock_call.call_count == 1
     assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -242,12 +242,12 @@ def test_get_exams(client, mocker):
 
     assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -269,12 +269,12 @@ def test_post_exams(client, mocker):
     assert get_mock_call.call_count == 1
     assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
@@ -296,12 +296,12 @@ def test_get_exam(client, mocker):
 
     assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams/1',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -325,12 +325,12 @@ def test_patch_exam(client, mocker):
     assert get_mock_call.call_count == 1
     assert patch_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     patch_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams/1',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
@@ -352,12 +352,12 @@ def test_delete_exam(client, mocker):
     assert get_mock_call.call_count == 1
     assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams/1',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -379,12 +379,12 @@ def test_get_students(client, mocker):
 
     assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/students',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/students',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -406,12 +406,12 @@ def test_post_students(client, mocker):
     )
 
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/students',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/students',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
@@ -435,12 +435,12 @@ def test_delete_student(client, mocker):
     assert get_mock_call.call_count == 1
     assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/students/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/students/1',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -462,12 +462,12 @@ def test_get_professors(client, mocker):
 
     assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/professors',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/professors',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -491,12 +491,12 @@ def test_post_professors(client, mocker):
     assert get_mock_call.call_count == 1
     assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/professors',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/professors',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
@@ -518,12 +518,12 @@ def test_delete_professor(client, mocker):
     assert get_mock_call.call_count == 1
     assert delete_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     delete_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/professors/1',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/professors/1',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -545,12 +545,12 @@ def test_get_exam_resolutions(client, mocker):
 
     assert get_mock_call.call_count == 2
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1/resolutions',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams/1/resolutions',
         json={},
         headers={
             'x-auth-token': valid_auth_token,
@@ -574,12 +574,12 @@ def test_post_exam_resolutions(client, mocker):
     assert get_mock_call.call_count == 1
     assert post_mock_call.call_count == 1
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1/resolutions',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams/1/resolutions',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
@@ -602,12 +602,12 @@ def test_post_exam_resolutions_evaluate(client, mocker):
     )
 
     get_mock_call.assert_any_call(
-        'https://ubademy-g2-auth-server!!!!.herokuapp.com/auth-server/v1/users/me',
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
         json={},
         headers={'x-auth-token': valid_auth_token},
     )
     post_mock_call.assert_any_call(
-        'https://ubademy-g2-courses!!!!.herokuapp.com/courses/v1/courses/1/exams/1/resolutions/1/evaluate',
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams/1/resolutions/1/evaluate',
         json={'name': 'Fiesta'},
         headers={
             'x-auth-token': valid_auth_token,
