@@ -4,6 +4,7 @@
 from flask import request
 from flask_restx import Namespace, Resource, abort
 
+from api_gateway.clients.auth_server_client import auth_server_client
 from api_gateway.clients.course_client import course_client
 from api_gateway.helpers.logger import logger
 
@@ -17,6 +18,14 @@ def call_courses(payload):
         logger.error('Authorization token is required.')
         abort(401, 'Authorization token is required.')
     token = request.headers['Authorization']
+
+    authentication_res_body, authentication_status_code = auth_server_client.call(
+        'get', '/auth-server/v1/users/me', token, None
+    )
+    # print('!!!! authentication_status_code', authentication_status_code)
+    if authentication_status_code != 200:
+        return authentication_res_body, authentication_status_code
+
     path = request.path.split('/api')[1]
     method = request.method.lower()
     res_body, res_status_code = course_client.call(method, path, token, payload)

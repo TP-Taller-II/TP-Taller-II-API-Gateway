@@ -10,9 +10,8 @@ class CourseClient:
     def __init__(self):
         # !!!!
         self.url = os.environ.get(
-            'FRUX_SC_URL', 'https://ubademy-g2-courses.herokuapp.com'
+            'FRUX_SC_URL', 'https://ubademy-g2-courses!!!!.herokuapp.com'
         )
-        self.api_key = os.environ.get('FRUX_SC_API_KEY', '')
 
     def _request(
         self, method, path, token, body,
@@ -21,9 +20,7 @@ class CourseClient:
             body = {}
         func = getattr(requests, method)
         try:
-            r = func(
-                f'{self.url}{path}', json=body, headers={'x-api-key': self.api_key}
-            )
+            r = func(f'{self.url}{path}', json=body, headers={'x-auth-token': token})
         except Exception as e:
             logger.error(
                 'Error when making request path: "%s", token: "%s" to Courses. Error: %s',
