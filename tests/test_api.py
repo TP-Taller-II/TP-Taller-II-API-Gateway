@@ -788,3 +788,21 @@ def test_post_admin_sign_out_unauthorized(client, mocker):
     mock_call.assert_called_once_with(mocker.ANY, json=request_dto, headers=mocker.ANY)
     assert response._status_code == 401
     assert json.loads(response.data) == forwarded_response
+
+
+def test_payments_status(client, mocker):
+    request_dto = {
+        "Payments": {
+            "status": "Online",
+            "creationDate": "123",
+            "description": "A short description",
+        }
+    }
+    forwarded_response = user_response_dto
+    mocker.patch(
+        'requests.get', return_value=ResponseMock(200, forwarded_response)
+    )
+
+    response = client.get("/api/status/", json=request_dto)
+
+    assert response._status_code == 200

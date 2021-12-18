@@ -6,23 +6,22 @@ import requests
 from api_gateway.helpers.logger import logger
 
 
-class AuthServerClient:
+class PaymentClient:
     def __init__(self):
         self.url = os.environ.get(
-            'FRUX_SC_URL', 'https://ubademy-g2-auth-server.herokuapp.com'
+            'FRUX_SC_URL', 'https://ubademy-g2-payments.herokuapp.com'
         )
 
-    def _request(
-        self, method, path, body, token,
-    ):
+    def _request(self, method, path, body, token):
         if not body:
             body = {}
         func = getattr(requests, method)
+        headers = {'x-auth-token': token}
         try:
-            r = func(f'{self.url}{path}', json=body, headers={'x-auth-token': token})
+            r = func(f'{self.url}{path}', json=body, headers=headers)
         except Exception as e:
             logger.error(
-                'Error when making request path: "%s", token: "%s" to Auth Server. Error: %s',
+                'Error when making request path: "%s", token: "%s" to Courses. Error: %s',
                 path,
                 token,
                 e,
@@ -33,7 +32,7 @@ class AuthServerClient:
             res_body = json.loads(r.content.decode())
         except Exception as e:
             logger.error(
-                'Error when parsing request path: "%s", token: "%s" to Auth Server. Error: %s',
+                'Error when making request path: "%s", token: "%s" to Courses. Error: %s',
                 path,
                 token,
                 e,
@@ -41,7 +40,7 @@ class AuthServerClient:
             res_body = {}
 
         logger.info(
-            'AuthServerClient method: %s, path: %s, status_code: %s, body: %s',
+            'PaymentClient method: %s, path: %s, status_code: %s, body: %s',
             method,
             path,
             r.status_code,
@@ -54,4 +53,4 @@ class AuthServerClient:
         return self._request(method, path, body, token)
 
 
-auth_server_client = AuthServerClient()
+payment_client = PaymentClient()

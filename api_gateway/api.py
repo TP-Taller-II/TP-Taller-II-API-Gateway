@@ -10,7 +10,7 @@ flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
 from flask_restx import Api
 
 from api_gateway import __version__
-from api_gateway.namespaces import course_namespace, user_namespace
+from api_gateway.namespaces import course_namespace, user_namespace, status_namespace, payment_namespace
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -18,6 +18,8 @@ logger.setLevel(logging.INFO)
 api = Api(prefix="/api", version=__version__, validate=True)
 api.add_namespace(course_namespace, path='/courses')
 api.add_namespace(user_namespace, path='/auth-server')
+api.add_namespace(status_namespace, path='/status')
+api.add_namespace(payment_namespace, path='/payments')
 
 
 @api.errorhandler
