@@ -28,16 +28,7 @@ class PaymentClient:
             )
             raise e
 
-        try:
-            res_body = json.loads(r.content.decode())
-        except Exception as e:
-            logger.error(
-                'Error when making request path: "%s", token: "%s" to Courses. Error: %s',
-                path,
-                token,
-                e,
-            )
-            res_body = {}
+        res_body = json.loads(r.content.decode())
 
         logger.info(
             'PaymentClient method: %s, path: %s, status_code: %s, body: %s',

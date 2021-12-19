@@ -29,16 +29,7 @@ class AuthServerClient:
             )
             raise e
 
-        try:
-            res_body = json.loads(r.content.decode())
-        except Exception as e:
-            logger.error(
-                'Error when parsing request path: "%s", token: "%s" to Auth Server. Error: %s',
-                path,
-                token,
-                e,
-            )
-            res_body = {}
+        res_body = json.loads(r.content.decode())
 
         logger.info(
             'AuthServerClient method: %s, path: %s, status_code: %s, body: %s',
