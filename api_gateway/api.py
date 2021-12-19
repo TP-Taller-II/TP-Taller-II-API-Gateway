@@ -10,7 +10,12 @@ flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
 from flask_restx import Api
 
 from api_gateway import __version__
-from api_gateway.namespaces import course_namespace, user_namespace, status_namespace, payment_namespace
+from api_gateway.namespaces import (
+    course_namespace,
+    payment_namespace,
+    status_namespace,
+    user_namespace,
+)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

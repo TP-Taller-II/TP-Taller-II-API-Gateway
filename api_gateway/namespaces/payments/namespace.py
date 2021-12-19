@@ -27,9 +27,7 @@ def call_payments(payload):
 
     path = request.path.split('/api')[1]
     method = request.method.lower()
-    res_body, res_status_code = payment_client.call(
-        method, path, payload, token
-    )
+    res_body, res_status_code = payment_client.call(method, path, payload, token)
     return res_body, res_status_code
 
 

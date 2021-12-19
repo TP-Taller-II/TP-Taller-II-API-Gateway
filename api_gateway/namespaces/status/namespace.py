@@ -25,9 +25,7 @@ def call_servers():
     if authentication_status_code != 200:
         return authentication_res_body, authentication_status_code
 
-    status = {"payments": payment_client.call(
-        'get', 'payments/status', None, token
-    )}
+    status = {"payments": payment_client.call('get', 'payments/status', None, token)}
 
     return status, 200
 
