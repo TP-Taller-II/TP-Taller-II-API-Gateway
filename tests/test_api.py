@@ -204,6 +204,33 @@ def test_put_course(client, mocker):
     assert json.loads(response.data) == {'id': '1'}
 
 
+def test_patch_course(client, mocker):
+    authentication_response = ResponseMock(200, user_response_dto)
+    courses_response = ResponseMock(200, {'id': '1'})
+    get_mock_call = mocker.patch('requests.get', return_value=authentication_response)
+    patch_mock_call = mocker.patch('requests.patch', return_value=courses_response)
+
+    response = client.patch("/api/courses/v1/courses/1", json={'name': 'Fiesta'})
+
+    assert get_mock_call.call_count == 1
+    assert patch_mock_call.call_count == 1
+    get_mock_call.assert_any_call(
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
+        json={},
+        headers={'x-auth-token': valid_auth_token},
+    )
+    patch_mock_call.assert_any_call(
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1',
+        json={'name': 'Fiesta'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
+    )
+    assert response._status_code == 200
+    assert json.loads(response.data) == {'id': '1'}
+
+
 def test_delete_course(client, mocker):
     authentication_response = ResponseMock(200, user_response_dto)
     courses_response = ResponseMock(200, {'id': '1'})
@@ -319,6 +346,35 @@ def test_put_exam(client, mocker):
     patch_mock_call = mocker.patch('requests.put', return_value=courses_response)
 
     response = client.put("/api/courses/v1/courses/1/exams/1", json={'name': 'Fiesta'})
+
+    assert get_mock_call.call_count == 1
+    assert patch_mock_call.call_count == 1
+    get_mock_call.assert_any_call(
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
+        json={},
+        headers={'x-auth-token': valid_auth_token},
+    )
+    patch_mock_call.assert_any_call(
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses/1/exams/1',
+        json={'name': 'Fiesta'},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
+    )
+    assert response._status_code == 200
+    assert json.loads(response.data) == {'id': '1'}
+
+
+def test_patch_exam(client, mocker):
+    authentication_response = ResponseMock(200, user_response_dto)
+    courses_response = ResponseMock(200, {'id': '1'})
+    get_mock_call = mocker.patch('requests.get', return_value=authentication_response)
+    patch_mock_call = mocker.patch('requests.patch', return_value=courses_response)
+
+    response = client.patch(
+        "/api/courses/v1/courses/1/exams/1", json={'name': 'Fiesta'}
+    )
 
     assert get_mock_call.call_count == 1
     assert patch_mock_call.call_count == 1
