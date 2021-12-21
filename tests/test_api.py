@@ -177,13 +177,13 @@ def test_get_course(client, mocker):
     assert json.loads(response.data) == {'id': '1'}
 
 
-def test_patch_course(client, mocker):
+def test_put_course(client, mocker):
     authentication_response = ResponseMock(200, user_response_dto)
     courses_response = ResponseMock(200, {'id': '1'})
     get_mock_call = mocker.patch('requests.get', return_value=authentication_response)
-    patch_mock_call = mocker.patch('requests.patch', return_value=courses_response)
+    patch_mock_call = mocker.patch('requests.put', return_value=courses_response)
 
-    response = client.patch("/api/courses/v1/courses/1", json={'name': 'Fiesta'})
+    response = client.put("/api/courses/v1/courses/1", json={'name': 'Fiesta'})
 
     assert get_mock_call.call_count == 1
     assert patch_mock_call.call_count == 1
@@ -312,15 +312,13 @@ def test_get_exam(client, mocker):
     assert json.loads(response.data) == {'id': '1'}
 
 
-def test_patch_exam(client, mocker):
+def test_put_exam(client, mocker):
     authentication_response = ResponseMock(200, user_response_dto)
     courses_response = ResponseMock(200, {'id': '1'})
     get_mock_call = mocker.patch('requests.get', return_value=authentication_response)
-    patch_mock_call = mocker.patch('requests.patch', return_value=courses_response)
+    patch_mock_call = mocker.patch('requests.put', return_value=courses_response)
 
-    response = client.patch(
-        "/api/courses/v1/courses/1/exams/1", json={'name': 'Fiesta'}
-    )
+    response = client.put("/api/courses/v1/courses/1/exams/1", json={'name': 'Fiesta'})
 
     assert get_mock_call.call_count == 1
     assert patch_mock_call.call_count == 1

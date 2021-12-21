@@ -75,6 +75,11 @@ class Course3Resource(Resource):
         """Patch Courses Call"""
         return call_courses(ns.payload)
 
+    @ns.doc('put_call_courses')
+    def put(self, p1, p2, p3):
+        """Put Courses Call"""
+        return call_courses(ns.payload)
+
     @ns.doc('delete_call_courses')
     def delete(self, p1, p2, p3):
         """Delete Courses Call"""
@@ -97,6 +102,11 @@ class Course4Resource(Resource):
     @ns.doc('patch_call_courses')
     def patch(self, p1, p2, p3, p4):
         """Patch Courses Call"""
+        return call_courses(ns.payload)
+
+    @ns.doc('put_call_courses')
+    def put(self, p1, p2, p3, p4):
+        """Put Courses Call"""
         return call_courses(ns.payload)
 
     @ns.doc('delete_call_courses')
@@ -123,6 +133,11 @@ class Course5Resource(Resource):
         """Patch Courses Call"""
         return call_courses(ns.payload)
 
+    @ns.doc('put_call_courses')
+    def put(self, p1, p2, p3, p4, p5):
+        """Put Courses Call"""
+        return call_courses(ns.payload)
+
     @ns.doc('delete_call_courses')
     def delete(self, p1, p2, p3, p4, p5):
         """Delete Courses Call"""
@@ -145,6 +160,11 @@ class Course6Resource(Resource):
     @ns.doc('patch_call_courses')
     def patch(self, p1, p2, p3, p4, p5, p6):
         """Patch Courses Call"""
+        return call_courses(ns.payload)
+
+    @ns.doc('put_call_courses')
+    def put(self, p1, p2, p3, p4, p5, p6):
+        """Put Courses Call"""
         return call_courses(ns.payload)
 
     @ns.doc('delete_call_courses')
@@ -173,6 +193,11 @@ class Course7Resource(Resource):
         """Patch Courses Call"""
         return call_courses(ns.payload)
 
+    @ns.doc('put_call_courses')
+    def put(self, p1, p2, p3, p4, p5, p6, p7):
+        """Put Courses Call"""
+        return call_courses(ns.payload)
+
     @ns.doc('delete_call_courses')
     def delete(self, p1, p2, p3, p4, p5, p6, p7):
         """Delete Courses Call"""
@@ -197,6 +222,11 @@ class Course8Resource(Resource):
     @ns.doc('patch_call_courses')
     def patch(self, p1, p2, p3, p4, p5, p6, p7, p8):
         """Patch Courses Call"""
+        return call_courses(ns.payload)
+
+    @ns.doc('put_call_courses')
+    def put(self, p1, p2, p3, p4, p5, p6, p7, p8):
+        """Put Courses Call"""
         return call_courses(ns.payload)
 
     @ns.doc('delete_call_courses')
