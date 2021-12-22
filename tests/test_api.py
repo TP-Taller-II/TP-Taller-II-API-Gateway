@@ -844,7 +844,7 @@ def test_post_admin_sign_out_unauthorized(client, mocker):
     assert json.loads(response.data) == forwarded_response
 
 
-def test_payments_status(client, mocker):
+def test_status(client, mocker):
     request_dto = {
         "Payments": {
             "status": "Online",
