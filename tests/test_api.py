@@ -844,17 +844,72 @@ def test_post_admin_sign_out_unauthorized(client, mocker):
     assert json.loads(response.data) == forwarded_response
 
 
-def test_payments_status(client, mocker):
-    request_dto = {
-        "Payments": {
-            "status": "Online",
-            "creationDate": "123",
-            "description": "A short description",
-        }
-    }
+def test_payments_get_subscription(client, mocker):
     forwarded_response = user_response_dto
     mocker.patch('requests.get', return_value=ResponseMock(200, forwarded_response))
 
-    response = client.get("/api/status/", json=request_dto)
+    response = client.get("/api/payments/v1/getSubscription/60456ebb0190bf001f6bbee2")
+
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_payments_get_contract(client, mocker):
+    forwarded_response = user_response_dto
+    mocker.patch('requests.get', return_value=ResponseMock(200, forwarded_response))
+
+    response = client.get("/api/payments/v1/getContract")
+
+    assert response._status_code == 200
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_payments_pay_subscription_failed_auth(client, mocker):
+    authentication_response = ResponseMock(401, user_response_dto)
+    request_dto = {
+        "user_id": "60456ebb0190bf001f6bbee2",
+        "wallet_pass": "0x8da4ef21b864d2cc526dbdb2a120bd2874c36c9d0a1fb7f8c63d7f7a8b41de8f",
+        "tier": 1,
+    }
+
+    forwarded_response = user_response_dto
+    mocker.patch('requests.get', return_value=authentication_response)
+    mocker.patch('requests.post', return_value=ResponseMock(200, forwarded_response))
+
+    response = client.post("/api/payments/v1/paySubscription", json=request_dto)
+
+    assert response._status_code == 401
+    assert json.loads(response.data) == forwarded_response
+
+
+def test_payments_missing_authorization(client, mocker):
+    authentication_response = ResponseMock(200, user_response_dto)
+
+    del client.environ_base['HTTP_AUTHORIZATION']
+
+    mocker.patch('requests.get', return_value=authentication_response)
+
+    response = client.get("/api/auth-server/v1/admin/users")
+
+    assert response._status_code == 401
+
+    response = client.get("/api/courses/v1/courses")
+
+    assert response._status_code == 401
+
+    response = client.get("/api/payments/v1/getContract")
+
+    assert response._status_code == 401
+
+    response = client.get("/api/status/")
+
+    assert response._status_code == 401
+
+
+def test_status(client, mocker):
+    forwarded_response = user_response_dto
+    mocker.patch('requests.get', return_value=ResponseMock(200, forwarded_response))
+
+    response = client.get("/api/status/")
 
     assert response._status_code == 200
