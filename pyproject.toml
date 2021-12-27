@@ -19,6 +19,7 @@ flask_script = "^2.0.6"
 Flask-Cors = "^3.0.9"
 python-json-logger = "^2.0.2"
 requests = "^2.26.0"
+ddtrace = "^0.57.0"
 
 [tool.poetry.dev-dependencies]
 nox = "^2020.8.22"
