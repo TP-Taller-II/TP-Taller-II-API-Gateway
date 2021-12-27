@@ -31,9 +31,6 @@ api.add_namespace(payment_namespace, path='/payments')
 def handle_exception(error: Exception):
     """When an unhandled exception is raised"""
     logger.error('Unhandled Exception: %s - %s', str(type(error)), str(error))
-    print(
-        'Unhandled Exception: ', str(type(error)), str(error)
-    )  # Todo: remove this print !!!!!
 
     message = "Error: " + getattr(error, 'message', str(error))
     return {'message': message}, getattr(error, 'code', 500)

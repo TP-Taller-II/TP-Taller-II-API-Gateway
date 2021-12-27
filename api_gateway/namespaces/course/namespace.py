@@ -25,7 +25,11 @@ def call_courses(payload):
     if authentication_status_code != 200:
         return authentication_res_body, authentication_status_code
 
-    path = request.path.split('/api')[1]
+    query_string = ''
+    if len(request.query_string) != 0:
+        query_string = f'?{request.query_string.decode("utf-8")}'
+
+    path = request.path.split('/api')[1] + query_string
     method = request.method.lower()
     res_body, res_status_code = course_client.call(
         method, path, payload, token, authentication_res_body['_id']
