@@ -1,19 +1,15 @@
 FROM python:3.7.7-stretch
+
 RUN apt-get update
 
 # Install Heroku GPG dependencies
 RUN apt-get install -y gpg apt-transport-https gpg-agent curl ca-certificates
 
-# Add Datadog repository and signing keys
-RUN sh -c "echo 'deb https://apt.datadoghq.com/ stable 7' > /etc/apt/sources.list.d/datadog.list"
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 D75CEA17048B9ACBF186794B32637D44F14F620E
-
-# Install the Datadog agent
-RUN apt-get update && apt-get -y --force-yes install --reinstall datadog-agent
+RUN DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=a6964e362cb567e64666d378877aeb79 DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
 
 # Install app related dependencies
 RUN pip install poetry
+RUN pip install ddtrace
 
 WORKDIR /app
 
