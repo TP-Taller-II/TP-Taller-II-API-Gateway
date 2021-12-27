@@ -91,6 +91,33 @@ def test_get_courses(client, mocker):
     assert json.loads(response.data) == ['course1', 'course2']
 
 
+def test_get_filtered_courses(client, mocker):
+    authentication_response = ResponseMock(200, user_response_dto)
+    courses_response = ResponseMock(200, ['course1', 'course2'])
+    get_mock_call = mocker.patch(
+        'requests.get', side_effect=[authentication_response, courses_response]
+    )
+
+    response = client.get("/api/courses/v1/courses?category=Party&subscription=2")
+
+    assert get_mock_call.call_count == 2
+    get_mock_call.assert_any_call(
+        'https://ubademy-g2-auth-server.herokuapp.com/auth-server/v1/users/me',
+        json={},
+        headers={'x-auth-token': valid_auth_token},
+    )
+    get_mock_call.assert_any_call(
+        'https://ubademy-g2-courses.herokuapp.com/courses/v1/courses?category=Party&subscription=2',
+        json={},
+        headers={
+            'x-auth-token': valid_auth_token,
+            'x-user-id': user_response_dto['_id'],
+        },
+    )
+    assert response._status_code == 200
+    assert json.loads(response.data) == ['course1', 'course2']
+
+
 def test_get_courses_but_authentication_returns_401(client, mocker):
     authentication_response = ResponseMock(401, {'message': 'Token expired'})
     get_mock_call = mocker.patch('requests.get', side_effect=[authentication_response])
